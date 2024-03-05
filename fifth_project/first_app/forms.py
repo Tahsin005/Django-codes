@@ -6,3 +6,6 @@ class contactForm(forms.Form):
     age = forms.IntegerField(label='Age') 
     weight = forms.FloatField(label='Weight')
     balance = forms.DecimalField(label='Balance')
+    check = forms.BooleanField(label='Check')
+    birthday = forms.DateField(label='Birthday')
+    appointment = forms.DateTimeField(label='Appointment')

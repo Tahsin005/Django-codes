@@ -1,5 +1,5 @@
 from django import forms
-
+from django.core import validators
 class contactForm(forms.Form):
     name = forms.CharField(label='User Name', help_text='Total length must be within 50 Characters', required=False, widget = forms.Textarea(attrs={'id' : 'text_area', 'class' : 'class1 class2', 'placeholder' : 'Enter your name'}))
     # files = forms.FileField()
@@ -19,11 +19,54 @@ class contactForm(forms.Form):
     pizza = forms.MultipleChoiceField(choices=MEAL, widget=forms.CheckboxSelectMultiple)
     
 
+# class studentData(forms.Form):
+#     name = forms.CharField(widget=forms.TextInput)
+#     email = forms.CharField(widget=forms.EmailInput)
+#     # def clean_name(self):
+#     #     valname = self.cleaned_data['name']
+#     #     if len(valname) < 10:
+#     #         raise forms.ValidationError('Name must be greater than 10')
+#     #     return valname
+#     # def clean_email(self):
+#     #     valemail = self.cleaned_data['email']
+#     #     if '@gmail.com' not in valemail:
+#     #         raise forms.ValidationError('Email must contain at least one @gmail.com address')
+#     #     return valemail
+    
+#     def clean(self):
+#         cleaned_data = super().clean()
+#         valname = self.cleaned_data['name']
+#         valemail = self.cleaned_data['email']
+#         if len(valname) < 10:
+#             raise forms.ValidationError('Name must be greater than 10')
+        
+#         if '@gmail.com' not in valemail:
+#             raise forms.ValidationError('Email must contain at least one @gmail.com address')
+def len_check(value):
+    if len(value) < 10:
+        raise forms.ValidationError('Name must be greater than 10')
+    
 class studentData(forms.Form):
+    name = forms.CharField(widget=forms.TextInput, validators=[validators.MinLengthValidator(10, message='Enter a name with at least 10 characters')])
+    text = forms.CharField(widget=forms.TextInput, validators=[len_check])
+    email = forms.CharField(widget=forms.EmailInput, validators=[validators.EmailValidator(message='Enter a valid email')])
+    age = forms.IntegerField(widget=forms.NumberInput, validators=[validators.MaxValueValidator(34, message='Age must be less than 34'), validators.MinValueValidator(24, message='Age must be greater than 24')])
+    file = forms.FileField(validators=[validators.FileExtensionValidator(allowed_extensions=['pdf'], message='File type must be pdf')])
+    
+    
+    
+class passwordValidationProject(forms.Form):
     name = forms.CharField(widget=forms.TextInput)
-    email = forms.CharField(widget=forms.EmailInput)
-    def clean_name(self):
-        valname = self.cleaned_data['name']
+    password = forms.CharField(widget=forms.PasswordInput)
+    confirm_password = forms.CharField(widget=forms.PasswordInput)
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        psw = cleaned_data.get('password')
+        cpsw = cleaned_data.get('confirm_password')
+        valname = cleaned_data.get('name')
+        if psw!= cpsw:
+            raise forms.ValidationError('Passwords do not match')
         if len(valname) < 10:
             raise forms.ValidationError('Name must be greater than 10')
-        return valname
+    

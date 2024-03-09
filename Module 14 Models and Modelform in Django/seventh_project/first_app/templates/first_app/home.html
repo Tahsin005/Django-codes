@@ -14,8 +14,13 @@
   <body>
     {% load crispy_forms_tags %}
     <h1>This is from home page too</h1>
-    <div>
-        {{form | crispy}}
+    <div style="width: 50%; margin: auto">
+        <form method="post">
+            {% csrf_token %}
+            {{form | crispy}}
+            {% comment %} <button class="btn btn-primary" type="submit">Submit</button> {% endcomment %}
+            <input class="btn btn-primary" type="submit" value="Submit">
+        </form>
     </div>
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"

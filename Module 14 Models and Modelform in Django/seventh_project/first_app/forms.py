@@ -11,8 +11,7 @@ class StudentForm(forms.ModelForm):
             'roll' : 'Student Roll'
         }
         widgets = {
-            'name' : forms.TextInput(attrs = {'class' : 'btn btn-primary'}),
-            'roll' : forms.PasswordInput()
+            'name' : forms.TextInput(),
         }
         help_texts = {
             'name' : 'Enter Student Name',

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h1>Welcome</h1>
+    <h1>Hello {{user}}</h1>
+    <div class="container mb-4">
+        <a class="btn btn-info mx-2" href="{% url 'pass_change' %}">Change Password Using Old Password</a>
+        <a class="btn btn-warning mx-2" href="{% url 'pass_change2' %}">Change Password Without Using Old Password</a>
+    </div>
+    <div class="container" style="align-items: center; justify-content: center; background-color: grey;">
+        <h1>Change Use Info</h1>
+        {% if messages %}
+        {% for m in messages %}
+            <p class="bg-success p-3 text-white">{{m}}</p>
+        {% endfor %}
+        {% endif %}
+        <form method="post" style="width: 50%; margin: auto;" novalidate>
+            {% if form.non_field_errors %}
+        {% for er in form.non_field_errors %}
+            <p class="bg-danger text-white px-5">{{er}}</p>
+        {% endfor %}
+        {% endif %}
+            {% load crispy_forms_tags %}
+            {% csrf_token %}
+            <!--{{ form|crispy }}-->
+            {% for fm in form %}
+            {{ fm.label_tag }}
+            {{ fm }}
+            {{ fm.errors }}
+            {% endfor %}
+            <br>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+{% endblock content %}

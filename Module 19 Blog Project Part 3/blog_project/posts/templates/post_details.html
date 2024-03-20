@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <img class="h-25 w-100" src="{{post.image.url}}" alt="">
+        <h1 class="card-title">{{ post.title }}</h1>
+        <p class="card-text">{{ post.content }}</p>
+        <p>Author : {{ post.author.first_name }} {{ post.author.last_name }}</p>
+        <small>Category : </small>
+        {% for ct in post.category.all %}
+          <button class="btn btn-primary btn-sm">{{ ct.name }}</button>
+        {% endfor %}
+        
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}
+

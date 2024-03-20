@@ -38,7 +38,7 @@
           <div class="card">
             <div class="card-body">
               <img class="" src="{{post.image.url}}" alt="" style="width: 50%">
-              <h1 class="card-title"><a href="{% url 'detail_post' post.id %}">{{ post.title }}</a></h1>
+              <h1 class="card-title"><a class="text-decoration-none" style="" href="{% url 'detail_post' post.id %}">{{ post.title | upper }}</a></h1>
               <p class="card-text">{{ post.content|truncatewords:10}}</p>
               <p>Author : {{ post.author.first_name }} {{ post.author.last_name }}</p>
               <small>Category : </small>

@@ -1,21 +1,45 @@
 {% extends "base.html" %}
-
+{% load crispy_forms_tags %}
 {% block content %}
-<div class="col-sm-6">
+<div class="card m-2" style="">
+  <div class="col-sm-12">
     <div class="card">
       <div class="card-body">
-        <img class="h-25 w-100" src="{{post.image.url}}" alt="">
-        <h1 class="card-title">{{ post.title }}</h1>
+        <img style="width: 50%;" class="" src="{{post.image.url}}" alt="">
+        <h1 class="card-title">{{ post.title | upper }}</h1>
         <p class="card-text">{{ post.content }}</p>
         <p>Author : {{ post.author.first_name }} {{ post.author.last_name }}</p>
         <small>Category : </small>
         {% for ct in post.category.all %}
-          <button class="btn btn-primary btn-sm">{{ ct.name }}</button>
+          <button class="btn btn-warning btn-sm">{{ ct.name }}</button>
         {% endfor %}
         
       </div>
+
+      <div class="card m-2 p-2">
+        <h5>Total Comment {{ comments | length}}</h5>
+        <div class="card-body">
+          {% for comment in comments %}
+          <hr>
+          <p><strong>{{comment.name}}</strong> - {{comment.created_on}}</p>
+          <p> Comment : {{comment.body}}</p>
+          {% endfor %}
+          <hr>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <form method="post">
+            <h1>Add Comment</h1>
+            {% csrf_token %}
+            {{comment_form | crispy}}
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
-
+</div>
 {% endblock content %}
 

@@ -1,5 +1,5 @@
 """
-URL configuration for gs4 project.
+URL configuration for gs1 project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.2/topics/http/urls/
@@ -19,10 +19,5 @@ from django.urls import path
 from course import views
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('learndj/', views.learn_django),
-    path('learnpy/', views.learn_python),
-    path('learnv/', views.learn_var),
-    path('learnm/', views.learn_math),
-    path('learnf/', views.learn_format),
+    path('learndj/', views.learn_django)
 ]
- 

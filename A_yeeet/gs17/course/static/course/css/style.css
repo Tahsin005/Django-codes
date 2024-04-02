@@ -1,0 +1,15 @@
+body{
+    background-color: darkslategray;
+}
+h2{
+    color: whitesmoke;
+}
+img {
+    width: 300px;
+    height: auto;
+    display: block; 
+    margin: 0 auto; 
+    padding: 10px; 
+    border: 2px solid #ccc; 
+    border-radius: 10px; 
+}

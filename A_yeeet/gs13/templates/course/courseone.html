@@ -13,11 +13,66 @@
 
 </head>
 <body>
-    <h1>{{nm | capfirst}}</h1>
+    <h1>Student Information</h1>
+    <ul>
+        {% for key, value in student.items %}
+            Student: {{ key }}
+            {% comment %} <li>
+                <ul>
+                    <li>Name: {{ value.name }}</li>
+                    <li>Roll: {{ value.roll }}</li>
+                </ul>
+            </li> {% endcomment %}
+            {% for k, v in value.items %}
+                <li>{{forloop.parentloop.counter}} : {{k}} = {{v}}</li>
+            {% endfor %}
+            <br>
+        {% endfor %}
+    </ul>
+    {% comment %} <ul>
+        {% for nm in names %}
+            <h1>{{forloop.counter0}} : {{nm}}</h1>
+        {% endfor %}
+    </ul> {% endcomment %}
+    {% comment %} <h1>{{nm | capfirst}}</h1>
     <h1>{{nm | length}}</h1>
     <h1>{{nm | upper}}</h1>
     <h1>{{nm | lower}}</h1>
     <h1>{{nm | slice:'5'}}</h1> 
-    <h1>{{nm | truncatechars:4}}</h1> 
+    <h1>{{nm | truncatechars:4}}</h1>  
+    <h1>{{nm | truncatewords:2}}</h1> 
+    {% if name %}
+        <h3>{{d | date:'D d M Y'}}</h3>
+        <h3>{{d | date:'SHORT_DATE_FORMAT'}}</h3>
+        <h3>{{d | time:'H:i'}}</h3>
+        <h3>{{d | time:'TIME_FORMAT'}}</h3>
+    {% endif %}
+    {% if st > 5 %}
+        <h1>SUIII</h1>
+    {% endif %}
+    <br> 
+    <br>
+    <br>
+    <br>
+    <h1>Example : </h1>
+    <h2>{{p1}}</h2>
+    <h2>{{p2}}</h2>
+    <h2>{{p3}}</h2>
+    
+    
+    <h1>Example : </h1>
+    <h2>{{p1 | floatformat}}</h2>
+    <h2>{{p2 | floatformat}}</h2>
+    <h2>{{p3 | floatformat}}</h2>
+    
+    <h1>Example : </h1>
+    <h2>{{p1 | floatformat:3}}</h2>
+    <h2>{{p2 | floatformat:3}}</h2>
+    <h2>{{p3 | floatformat:3}}</h2>
+
+    <h1>Example : </h1>
+    <h2>{{p1 | floatformat:0}}</h2>
+    <h2>{{p2 | floatformat:0}}</h2>
+    <h2>{{p3 | floatformat:0}}</h2> {% endcomment %}
 </body>
 </html>

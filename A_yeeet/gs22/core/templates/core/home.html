@@ -1,0 +1,9 @@
+{% extends "core/base.html" %}
+{% block title %}
+    Home Page
+{% endblock title %}
+{% block content %}
+    <h2>This is home page. Generated using template inheritance {{d}}</h2>
+    {% include 'core/topcourse.html' with p='PHP' only %}
+{% endblock content %}
+

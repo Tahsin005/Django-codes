@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+    <link rel="stylesheet" href="{% static 'enroll/css/core.css' %}">
+    
+</head>
+<body>
+    <div id="hello">
+        <h2>Styling django form errors and field error</h2>
+    </div>
+    {% comment %} <form action="" method="POST" novalidate>
+        {% csrf_token %}
+        {{form.non_field_errors}}
+        {% for field in form  %}
+            <div>
+                {{field.label_tag}} {{field}} 
+                <span class="errorlist">{{field.errors | striptags}}</span>
+            </div>
+        {% endfor %}
+        <input type="submit" value="Submit">
+    </form> {% endcomment %}
+    <form action="" method="POST" novalidate>
+        {% csrf_token %}
+        {{form.non_field_errors}}
+        {% for field in form  %}
+            <div>
+                {{field.label_tag}} {{field}} 
+                {% for error in field.errors  %}
+                    <span class="errorlist">{{error}}</span>
+                {% endfor %}
+            </div>
+        {% endfor %}
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

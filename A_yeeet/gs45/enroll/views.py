@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
 from . forms import StudentRegistration
 # Create your views here.
 
@@ -10,8 +9,6 @@ def showformdata(request):
             print('Cleaned data')
             print('Name : ', fm.cleaned_data['name'])
             print('Email : ', fm.cleaned_data['email'])
-            print('Password : ', fm.cleaned_data['password'])
-            print('R-Password : ', fm.cleaned_data['rpassword'])
     else:
         fm = StudentRegistration()
     return render(request, 'enroll/userregistration.html', {'form' : fm})

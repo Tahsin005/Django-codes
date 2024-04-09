@@ -1,0 +1,15 @@
+#hello {
+    background-color: lightblue; /* Background color */
+    padding: 20px; /* Padding around the content */
+    border: 2px solid navy; /* Border */
+    border-radius: 10px; /* Rounded corners */
+    text-align: center; /* Center-align the content */
+    font-family: Arial, sans-serif; /* Font family */
+}
+.error {
+    list-style-type: none;
+    color: violet;
+    font-size: 10px;
+    margin: 0;
+    padding: 0;
+}

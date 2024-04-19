@@ -1,6 +1,9 @@
 from django.contrib.auth.signals import user_logged_in, user_logged_out, user_login_failed
 from django.contrib.auth.models import User
 from django.dispatch import receiver
+from django.db.models.signals import pre_init, pre_save, pre_delete, post_init, post_save, post_delete
+
+
 @receiver(user_logged_in, sender=User)
 def login_success(sender, request, user, **kwargs):
     print('--------------------------------')
@@ -40,4 +43,23 @@ def login_failed(sender, credentials, request, **kwargs):
 # user_login_failed.connect(login_failed)
 
 
-# 47:30
+
+@receiver(pre_save, sender=User)
+def at_beginning_save(sender, instance, **kwargs):
+    print('--------------------------------')
+    print('Pre save signal......')
+    print('Sender : ', sender)
+    print('Instance : ', instance)
+    print(f'Kwargs : {kwargs}')
+# pre_save.connect(at_beginning_save, sender=User)
+
+@receiver(pre_save, sender=User)
+def at_beginning_save(sender, instance, **kwargs):
+    print('--------------------------------')
+    print('Pre save signal......')
+    print('Sender : ', sender)
+    print('Instance : ', instance)
+    print(f'Kwargs : {kwargs}')
+# pre_save.connect(at_beginning_save, sender=User)
+    
+# 54:00

@@ -31,10 +31,13 @@ def logout_success(sender, request, user, **kwargs):
 @receiver(user_login_failed)
 def login_failed(sender, credentials, request, **kwargs):
     print('--------------------------------')
-    print('Log in failed signal......')
+    print('Login failed signal......')
     print('Sender : ', sender)
     print('Request : ', request)
     print('Credentials : ', credentials)
     print(f'kwargs : {kwargs}')
     
 # user_login_failed.connect(login_failed)
+
+
+# 47:30

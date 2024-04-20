@@ -63,3 +63,59 @@ def at_beginning_save(sender, instance, **kwargs):
 # pre_save.connect(at_beginning_save, sender=User)
     
 # 54:00
+@receiver(post_save, sender=User)
+def at_end_save(sender, instance, created, **kwargs):
+    if created:
+        print('--------------------------------')
+        print('Post save signal......')
+        print('New Record')
+        print('Sender : ', sender)
+        print('Instance : ', instance)
+        print('Created : ', created)
+        print(f'Kwargs : {kwargs}')
+    else:
+        print('--------------------------------')
+        print('Post save signal......')
+        print('Old Record, update')
+        print('Sender : ', sender)
+        print('Instance : ', instance)
+        print('Created : ', created)
+        print(f'Kwargs : {kwargs}')
+        
+# post_save.connect(at_end_save, sender=User)
+@receiver(pre_delete, sender=User)
+def at_beginning_delete(sender, instance, **kwargs):
+    print('--------------------------------')
+    print('Pre delete signal......')
+    print('Sender : ', sender)
+    print('Instance : ', instance)
+    print(f'Kwargs : {kwargs}')
+# pre_delete.connect(at_beginning_delete, sender=User)
+
+
+@receiver(post_delete, sender=User)
+def at_ending_delete(sender, instance, **kwargs):
+    print('--------------------------------')
+    print('Post delete signal......')
+    print('Sender : ', sender)
+    print('Instance : ', instance)
+    print(f'Kwargs : {kwargs}')
+# post_delete.connect(at_ending_delete, sender=User)
+@receiver(pre_init, sender=User)
+def at_beginning_init(sender, *args, **kwargs):
+    print('--------------------------------')
+    print('Pre init signal......')
+    print('Sender : ', sender)
+    print(f'args : {args}')
+    print(f'Kwargs : {kwargs}')
+# pre_init.connect(at_beginning_init, sender=User)
+
+
+@receiver(post_init, sender=User)
+def at_ending_init(sender, *args, **kwargs):
+    print('--------------------------------')
+    print('Post init signal......')
+    print('Sender : ', sender)
+    print(f'args : {args}')
+    print(f'Kwargs : {kwargs}')
+# post_init.connect(at_ending_init, sender=User)

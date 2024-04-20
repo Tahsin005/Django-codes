@@ -1,9 +1,9 @@
 from django.contrib.auth.signals import user_logged_in, user_logged_out, user_login_failed
 from django.contrib.auth.models import User
 from django.dispatch import receiver
-from django.db.models.signals import pre_init, pre_save, pre_delete, post_init, post_save, post_delete
+from django.db.models.signals import pre_init, pre_save, pre_delete, post_init, post_save, post_delete, pre_migrate, post_migrate
 from django.core.signals import request_started, request_finished, got_request_exception
-
+from django.db.backends.signals import connection_created
 @receiver(user_logged_in, sender=User)
 def login_success(sender, request, user, **kwargs):
     print('--------------------------------')
@@ -62,7 +62,6 @@ def at_beginning_save(sender, instance, **kwargs):
     print(f'Kwargs : {kwargs}')
 # pre_save.connect(at_beginning_save, sender=User)
     
-# 54:00
 @receiver(post_save, sender=User)
 def at_end_save(sender, instance, created, **kwargs):
     if created:
@@ -143,3 +142,39 @@ def at_request_exception(sender, request, **kwargs):
     print('Request : ', request)
     print(f'Kwargs : {kwargs}')
 # got_request_exception.connect(at_request_exception)
+
+@receiver(pre_migrate)
+def before_install_app(sender, app_config, verbosity, interactive, using, plan, apps, **kwargs):
+    print('--------------------------------')
+    print('Pre install app......')
+    print('Sender : ', sender)
+    print('AppConfig : ', app_config)
+    print('Verbosity : ', verbosity)
+    print('Interactive : ', interactive)
+    print('Using : ', using)
+    print('Plan : ', plan)
+    print('App : ', apps)
+    print(f'Kwargs : {kwargs}')
+# pre_migrate.connect(before_install_app)
+@receiver(post_migrate)
+def at_end_migrate_flush(sender, app_config, verbosity, interactive, using, plan, apps, **kwargs):
+    print('--------------------------------')
+    print('At end migrate flush......')
+    print('Sender : ', sender)
+    print('AppConfig : ', app_config)
+    print('Verbosity : ', verbosity)
+    print('Interactive : ', interactive)
+    print('Using : ', using)
+    print('Plan : ', plan)
+    print('App : ', apps)
+    print(f'Kwargs : {kwargs}')
+# post_migrate.connect(at_end_migrate_flush)
+
+@receiver(connection_created)
+def conn_db(sender, connection, **kwargs):
+    print('--------------------------------')
+    print('Connection created......')
+    print('Sender : ', sender)
+    print('Connection : ', connection)
+    print(f'Kwargs : {kwargs}')
+# connection_created.connect(conn_db)

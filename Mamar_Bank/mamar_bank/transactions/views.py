@@ -7,6 +7,8 @@ from django.views import View
 from django.http import HttpResponse
 from django.views.generic import CreateView, ListView
 from transactions.constants import DEPOSIT, WITHDRAWAL,LOAN, LOAN_PAID
+from django.core.mail import EmailMessage, EmailMultiAlternatives
+from django.template.loader import render_to_string
 from datetime import datetime
 from django.db.models import Sum
 from transactions.forms import (
@@ -15,6 +17,18 @@ from transactions.forms import (
     LoanRequestForm,
 )
 from transactions.models import Transaction
+
+
+def send_transaction_email(user, amount, subject, template):
+    #email send 
+    mail_subject = "Deposit Message"
+    message = render_to_string(template, {
+        'user': user,
+        'amount': amount,
+    })
+    send_email = EmailMultiAlternatives(subject, '', to={user.email})
+    send_email.attach_alternative(message, "text/html")
+    send_email.send()
 
 class TransactionCreateMixin(LoginRequiredMixin, CreateView):
     template_name = 'transactions/transaction_form.html'
@@ -34,7 +48,6 @@ class TransactionCreateMixin(LoginRequiredMixin, CreateView):
         context.update({
             'title': self.title
         })
-
         return context
 
 
@@ -49,7 +62,7 @@ class DepositMoneyView(TransactionCreateMixin):
     def form_valid(self, form):
         amount = form.cleaned_data.get('amount')
         account = self.request.user.account
-        # if not account.initial_deposit_date: 
+        # if not account.initial_deposit_date:
         #     now = timezone.now()
         #     account.initial_deposit_date = now
         account.balance += amount # amount = 200, tar ager balance = 0 taka new balance = 0+200 = 200
@@ -63,6 +76,10 @@ class DepositMoneyView(TransactionCreateMixin):
             self.request,
             f'{"{:,.2f}".format(float(amount))}$ was deposited to your account successfully'
         )
+        
+        #email send 
+        send_transaction_email(self.request.user, amount, "Deposit Message", 'transactions/deposite_email.html')
+        
 
         return super().form_valid(form)
 
@@ -87,7 +104,8 @@ class WithdrawMoneyView(TransactionCreateMixin):
             self.request,
             f'Successfully withdrawn {"{:,.2f}".format(float(amount))}$ from your account'
         )
-
+        #email send 
+        send_transaction_email(self.request.user, amount, "Withdrawl Message", 'transactions/withdrawl_email.html')
         return super().form_valid(form)
 
 class LoanRequestView(TransactionCreateMixin):
@@ -109,6 +127,9 @@ class LoanRequestView(TransactionCreateMixin):
             f'Loan request for {"{:,.2f}".format(float(amount))}$ submitted successfully'
         )
 
+        #email send 
+        send_transaction_email(self.request.user, amount, "Loan Request Message", 'transactions/loan_email.html')
+        
         return super().form_valid(form)
     
 class TransactionReportView(LoginRequiredMixin, ListView):
@@ -161,7 +182,7 @@ class PayLoanView(LoginRequiredMixin, View):
                 loan.loan_approved = True
                 loan.transaction_type = LOAN_PAID
                 loan.save()
-                return redirect('transactions:loan_list')
+                return redirect('loan_list')
             else:
                 messages.error(
             self.request,

@@ -37,7 +37,10 @@
         <div class="col-sm-3">
           <div class="card">
             <div class="card-body">
-              <img class="" src="{{post.image.url}}" alt="" style="width: 50%">
+              {% if post.img %}
+                  <img src="{{ post.img.url }}" alt="{{ post.title }}" style="width: 50%">
+              {% endif %}
+              {% comment %} <img class="" src="{{post.img.url}}" alt="" style="width: 50%"> {% endcomment %}
               <h1 class="card-title"><a class="text-decoration-none" style="" href="{% url 'detail_post' post.id %}">{{ post.title | upper }}</a></h1>
               <p class="card-text">{{ post.content|truncatewords:10}}</p>
               <p>Author : {{ post.author.first_name }} {{ post.author.last_name }}</p>

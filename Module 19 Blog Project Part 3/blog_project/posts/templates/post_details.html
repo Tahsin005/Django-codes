@@ -5,7 +5,9 @@
   <div class="col-sm-12">
     <div class="card">
       <div class="card-body">
-        <img style="width: 50%;" class="" src="{{post.image.url}}" alt="">
+        {% if post.img %}
+        <img style="width: 50%;" class="" src="{{post.img.url}}" alt="">
+        {% endif %}
         <h1 class="card-title">{{ post.title | upper }}</h1>
         <p class="card-text">{{ post.content }}</p>
         <p>Author : {{ post.author.first_name }} {{ post.author.last_name }}</p>

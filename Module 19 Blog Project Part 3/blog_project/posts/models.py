@@ -8,7 +8,7 @@ class Post(models.Model):
     content = models.TextField()
     category = models.ManyToManyField(Category)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='posts/media/uploads/', blank=True, null=True)
+    img = models.ImageField(upload_to='images/', blank=True, null=True)
     def __str__(self) -> str:
         return self.title
     
@@ -22,4 +22,4 @@ class Comment(models.Model):
     
     def __str__(self):
         return f'Comments by {self.name}'
-    
+     

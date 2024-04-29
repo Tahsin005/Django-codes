@@ -11,6 +11,22 @@ Midterm : https://github.com/Tahsin005/Django_module_20_Midterm/tree/main/car_sa
 
 
 
+# Best way to show a form in template
+
+<form action="" method="POST" novalidate>
+        {% csrf_token %}
+        {{form.non_field_errors}}
+        {% for field in form  %}
+            <div>
+                {{field.label_tag}} {{field}} 
+                {% for error in field.errors  %}
+                    <span class="errorlist">{{error}}</span>
+                {% endfor %}
+            </div>
+        {% endfor %}
+        <input type="submit" value="Submit">
+    </form>
+
 
 
 STATIC_URL = 'static/'
@@ -36,6 +52,17 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 
 # Toast
+
+{% if messages %}
+        {% for message in messages %}
+            <div {% if message.tags %} class="alert alert-{{message.tags}} alert-dismissible fade show" {% endif %}>
+                <strong>{{message}}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endfor %}
+    {% endif %}
 
 {% if messages %}
     {% for message in messages %}

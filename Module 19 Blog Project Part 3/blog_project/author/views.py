@@ -65,6 +65,14 @@ def user_logout(request):
     logout(request)
     messages.success(request, 'Logged out successfully')
     return redirect('user_login')
+
+class UserLogoutView(LogoutView):
+    def get_success_url(self):
+        return reverse_lazy('user_login')
+    def dispatch(self, request, *args, **kwargs):
+        response = super().dispatch(request, *args, **kwargs)
+        messages.success(request, 'Logged out successfully')
+        return response
 @login_required            
 def profile(request):
     data = Post.objects.filter(author = request.user)

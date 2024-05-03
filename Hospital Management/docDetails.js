@@ -1,3 +1,5 @@
+// alert('From doc')
+
 const getparams = () => {
     const param = new URLSearchParams(window.location.search).get("doctorId");
 
@@ -46,6 +48,7 @@ const handleAppointment = () => {
     // console.log(symptom);
     // console.log(selectedTime.value);
     const param = new URLSearchParams(window.location.search).get("doctorId");
+    const patient_id = localStorage.getItem('patient_id');
 
     const info = {
         appointment_type: selected.value,
@@ -53,10 +56,10 @@ const handleAppointment = () => {
         time: selectedTime.value,
         symptom: symptom,
         cancel: false,
-        patient: 1,
+        patient: patient_id,
         doctor: param,
     }
-    // console.log(info);
+    console.log(info);
 
     fetch("https://testing-8az5.onrender.com/appointment/", {
         method: "POST",
@@ -68,6 +71,7 @@ const handleAppointment = () => {
     .then(response => response.json())
     .then(data =>  {
         console.log(data);
+        window.location.href = `pdf.html?doctorId=${param}`
     })
 
 }
@@ -120,5 +124,22 @@ const displayDetails = (doctor) => {
 }
 
 
+const loadPatientId = () => {
+    const user_id = localStorage.getItem('user_id');
+    fetch(`https://testing-8az5.onrender.com/patient/list/?user_id=${user_id}`)
+    .then(response => response.json())
+    .then(data => {
+        localStorage.setItem('patient_id', data[0].id);
+    });
+}
 
+
+
+// console.log('from now');
+
+
+
+
+
+loadPatientId();
 getparams();

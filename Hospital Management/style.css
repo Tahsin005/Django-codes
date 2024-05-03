@@ -124,3 +124,45 @@ footer{
     color: white;
     border-radius: 5px;
 }
+
+.user-details-container{
+    height: 100vh;
+    width: 75%;
+    margin: auto;
+}
+
+.user-img img {
+    width: 200px;
+    height: 200px;
+    border-radius: 100px;
+}
+.user-all{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+.all-appointment-container {
+    height: 100vh;
+    width: 90%;
+    margin: auto;
+}
+.doctor {
+    width: 350px;
+    height: 400px;
+    box-shadow: 4px 4px 8px gray;
+    text-align: center;
+    background-color: gray;
+    border-radius: 5px;
+    color: white;
+}
+.pdfbdtag {
+    background-color: rgb(215, 215, 215);
+}
+
+.symptom {
+    width: 50%;
+    padding: 20px;
+    margin: 20px;
+    border: none;
+}

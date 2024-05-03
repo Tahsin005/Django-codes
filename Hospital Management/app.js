@@ -6,8 +6,8 @@ const loadServices = () => {
 };
 
 const displayService = (services) => {
-    const parent = document.getElementById('service-container');
     for (const service of services) {
+        const parent = document.getElementById('service-container');
         const li = document.createElement('li');
         li.innerHTML = `
         <div class="card shadow h-100">

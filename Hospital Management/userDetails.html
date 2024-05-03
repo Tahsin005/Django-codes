@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration</title>
+    <title>User Details</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./login.css">
@@ -26,8 +26,8 @@
                   Profile
                 </button>
                 <ul class="dropdown-menu dropdown-menu-dark">
-                  <li><a class="dropdown-item active" href="#">Profile</a></li>
-                  <li><a class="dropdown-item" href="#">All Appoitment</a></li>
+                  <li><a class="dropdown-item active" href="userDetails.html">Profile</a></li>
+                  <li><a class="dropdown-item" href="allAppointments.html">All Appoitment</a></li>
                   <li><a class="dropdown-item" href="#">Logout</a></li>
                   <li><hr class="dropdown-divider"></li>
                 </ul>
@@ -35,31 +35,10 @@
         </div>
     </nav>
 
-
-    <h1 class="title mt-5 text-center">Registration</h1>
-    <div class="login-container">
-        <div class="col-md-6">
-            <form onsubmit="handleRegistration(event)">
-                <p id="error" class="text-danger"></p>
-                <input id="username" type="text" class="input" placeholder="Username" required>
-                <input id="first_name" type="text" class="input" placeholder="First Name" required>
-                <input id="last_name" type="text" class="input" placeholder="Last Name" required>
-                <input id="email" type="email" class="input" placeholder="Email" required>
-                <input id="password" type="password" class="input" placeholder="Password" required>
-                <input id="confirm_password" type="password" class="input" placeholder="Confirm Password" required>
-                <br>
-                <!-- <button onclick="handleRegistration(event)" class="submit-btn" type="submit">Register</button> -->
-                <input type="submit" value="Register" class="submit-btn">
-                <p>Already have an account? <a href="login.html">Login</a></p>
-
-
-
-            </form>
-        </div>
-        <div class="col-md-6">
-            <img class="w-100" src="./images/reg.png" alt="">
-        </div>
+    <div id="user-details-container" class="user-details-container d-flex justify-content-around align-items-center gsp-5">
+        
     </div>
+    
 
     <footer class="p-5">
         <div class="continer w-75 m-auto row p-5">
@@ -92,6 +71,7 @@
     <script src="./app.js"></script>
     <script src="./auth.js"></script>
     <script src="./docDetails.js"></script>
+    <script src="./userDetails.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiffy-slider@1.6.0/dist/js/swiffy-slider.min.js" crossorigin="anonymous" defer></script>
 

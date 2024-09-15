@@ -1,0 +1,46 @@
+{% extends "djangobasicsapp/Layout.html" %} {% block body_block %}
+<div class="bg-info p-2 mt-1">
+  {% if Data.loggedIn %}
+  <h1>Hi {{Data.name}}, you are logged in currently</h1>
+  {% else %}
+  <h1>You are browsing our site as a guest</h1>
+  {% endif %}
+</div>
+
+<div class="bg-info p-2 mt-1">
+  {% if Data.countryCode == 'BAN' %}
+  <h1>So, {{Data.name}} you are from Bangladesh i see</h1>
+  {% else %}
+  <h1>
+    You are not from Bangladesh, but if you are from Bindida then fuck off!
+    otherwise welcome!
+  </h1>
+  {% endif %}
+</div>
+
+<div class="bg-info p-2 mt-1">
+  {% if Data.workExperience > 10 and Data.workExperience < 20 %}
+  <h1>Hi {{Data.name}}, you are eligible for the post of senior developer.</h1>
+  {% else %}
+  <h1>
+    Hi {{Data.name}}, you are not eligible for the post of senior developer.
+  </h1>
+  {% endif %}
+</div>
+
+<div class="bg-info p-2 mt-1">
+  {% if Data.countryCode == 'BAN' or Data.countryCode == 'USA' %}
+  <h1>Job market is good in these countries.</h1>
+  {% else %}
+  <h1>Job market is not good in these countries.</h1>
+  {% endif %}
+</div>
+
+<div class="bg-info p-2 mt-1">
+  {% if 'Tahsin' in Data.name %}
+  <h1>You are a part of the elite team.</h1>
+  {% else %}
+  <h1>You are not a part of the elite team.</h1>
+  {% endif %}
+</div>
+{% endblock body_block %}

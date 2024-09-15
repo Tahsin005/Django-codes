@@ -31,7 +31,7 @@ SECRET_KEY = env("SECRET_KEY")
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
-CSRF_TRUSTED_ORIGINS = ['https://mamar-bank-7isl.onrender.com','https://*.127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['https://mamar-bank-a5ip.onrender.com','https://*.127.0.0.1']
 
 
 # Application definition
@@ -91,23 +91,23 @@ WSGI_APPLICATION = 'mamar_bank.wsgi.application'
 # }
 
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': env("DB_NAME"),
-#         'USER': env("DB_USER"),
-#         'PASSWORD': env("DB_PASSWORD"),
-#         'HOST': env("DB_HOST"),
-#         'PORT': env("DB_PORT"),
-#     }
-# }
-# Replace the SQLite DATABASES configuration with PostgreSQL:
 DATABASES = {
-    'default': dj_database_url.config(
-        # Replace this value with your local database's connection string.
-        default='postgres://mamarbank_z57f_user:XhVtLB4oYcQACCV26HB5BhFRp9VJkoGm@dpg-coml5tcf7o1s73f6hvs0-a.oregon-postgres.render.com/mamarbank_z57f',
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': env("DB_NAME"),
+        'USER': env("DB_USER"),
+        'PASSWORD': env("DB_PASSWORD"),
+        'HOST': env("DB_HOST"),
+        'PORT': env("DB_PORT"),
+    }
 }
+# Replace the SQLite DATABASES configuration with PostgreSQL:
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         # Replace this value with your local database's connection string.
+#         default='postgres://mamarbank_z57f_user:XhVtLB4oYcQACCV26HB5BhFRp9VJkoGm@dpg-coml5tcf7o1s73f6hvs0-a.oregon-postgres.render.com/mamarbank_z57f',
+#     )
+# }
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 

@@ -1,0 +1,115 @@
+{% extends "djangobasicsapp/Layout.html" %} {% block body_block %}
+<div class="p-4">
+  <h1>Add Filter Example:</h1>
+  <p>{{ProbationPeriod | add:2}}</p>
+  <p>{{FirstName | add:" " | add:LastName}}</p>
+  <p>{{2 | add:3}}</p>
+  <p>Adding String List: {{FirstQuarter | add:SecondQuarter}}</p>
+  <p>Adding Inter List: {{FQuarter | add:SQuarter}}</p>
+
+  <h1>String Casing Filters</h1>
+  <p>Add Slashes: {{AboutMe | addslashes}}</p>
+  <p>Cap First: {{AboutMe | capfirst}}</p>
+  <p>Lower: {{AboutMe | lower}}</p>
+  <p>Upper: {{AboutMe | upper}}</p>
+  <p>Title: {{AboutMe | title}}</p>
+
+  <h1>Date Time Filters</h1>
+  <p>Now: {{now}}</p>
+  <p>Day of the month with leading zeros: {{now | date:'d'}}</p>
+  <p>Day of the month without leading zeros: {{now | date:'j'}}</p>
+  <p>Day of Week: {{now | date:'D'}}</p>
+  <p>Day of Week Full Text: {{now | date:'l'}}</p>
+  <p>Day of Week: {{now | date:'w'}}</p>
+  <p>Day of Year: {{now | date:'z'}}</p>
+  <p>Week Number: {{now | date:'W'}}</p>
+  <p>Week Number: {{now | date:'w'}}</p>
+
+  <p>Month numeber with leading zeroes: {{now | date:'m'}}</p>
+  <p>Month number without leading zeroes: {{now | date:'n'}}</p>
+  <p>Month name upper{{now | date:'M'}}</p>
+  <p>Month name lower: {{now | date:'b'}}</p>
+  <p>Month full name: {{now | date:'F'}}</p>
+  <p>Month name avvreviation: {{now | date:'N'}}</p>
+  <p>Number of days in a month: {{now | date:'t'}}</p>
+
+  <p>Year with leading zeros: {{now | date:'y'}}</p>
+  <p>Year without leading zeros: {{now | date:'Y'}}</p>
+  <p>Leap year?: {{now | date:'L'}}</p>
+
+  <p>12 hour format without leading zeros: {{now | date:'g'}}</p>
+  <p>24 hour format without leading zeros: {{now | date:'G'}}</p>
+  <p>12 hour format: {{now | date:'h'}}</p>
+  <p>24 hour format: {{now | date:'H'}}</p>
+  <p>Minutes: {{now | date:'i'}}</p>
+  <p>Seconds: {{now | date:'s'}}</p>
+  <p>Micro Seconds: {{now | date:'u'}}</p>
+  <p>a.m. or p.m.: {{now | date:'a'}}</p>
+  <p>AM or PM: {{now | date:'A'}}</p>
+  <p>Time in 12 hour format: {{now | date:'f'}}</p>
+  <p>Time in 12 hour format with am or pm: {{now | date:'P'}}</p>
+  <p>Using multiple seperators: {{now | date:'D d MY'}}</p>
+
+  <p>Time: {{now | date:'H:i:s:u'}}</p>
+
+  <h1>Sorting dictionaries: {{Processors | dictsort:'cores'}}</h1>
+
+  <div>
+    <ul>
+      {% for Processor in Processors|dictsort:'cores' %}
+      <li>{{Processor.name}} {{Processor.cores}}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  <h1>
+    Sorting dictionaries in reverse order: {{Processors |
+    dictsortreversed:'cores'}}
+  </h1>
+
+  <div>
+    <ul>
+      {% for Processor in Processors|dictsortreversed:'cores' %}
+      <li>{{Processor.name}} {{Processor.cores}}</li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <h1>Miscellaneous Filters</h1>
+  <p>File size: {{PayForFight | filesizeformat}}</p>
+  <p>{{Message}}</p>
+  <p>{{Message | safe}}</p>
+  <p>{{Message | force_escape}}</p>
+  {% autoescape off %}
+  <p>{{Message}}</p>
+  {% endautoescape %}
+
+  <p>PreviousFight: {{PreviousFight | default:"Not Available"}}</p>
+
+  <p>NextFight: {{NextFight | default_if_none:"Not Available"}}</p>
+
+  <h1>Numerical Filters</h1>
+  <p>{{PayForFight | floatformat:'3'}}</p>
+  <p>{{PayForFight | floatformat:'3g'}}</p>
+  <p>{{PayForFight | divisibleby:'3'}}</p>
+  <p>{{PayForFight | get_digit:'3'}}</p>
+
+  <p>{{Processors | first}}</p>
+  <p>{{Processors | last}}</p>
+
+  <h1>cut, join, slice</h1>
+  <p>Cut: {{AboutMe | cut:" "}}</p>
+  <p>{{Processors | join:" // "}}</p>
+  <p>{{Processors | slice:"1"}}</p>
+  <p>{{Processors | length}}</p>
+  <p>{{FirstName | make_list}}</p>
+  <p>{{Processors | random}}</p>
+
+  <p>{{FirstName | truncatechars:21}}</p>
+  <p>{{AboutMe | truncatewords:2}}</p>
+  <p>{{AboutMe | wordcount}}</p>
+  <p>{{AboutMe | wordwrap:2}}</p>
+
+
+  
+</div>
+{% endblock body_block %}

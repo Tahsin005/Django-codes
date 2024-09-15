@@ -1,0 +1,30 @@
+
+
+
+{% extends "djangobasicsapp/Layout.html" %}
+
+{% block body_block %}
+<h1>Server time is: {{TodaysDate}}</h1>
+<table class="table border">
+    <thead>
+        <tr>
+            <td>Day</td>
+            <td>Month</td>
+            <td>Year</td>
+            <td>Hours</td>
+            <td>Minutes</td>
+            <td>Seconds</td>
+        </tr>
+
+        <tr>
+            <td>{{TodaysDate | date:'d'}}</td>
+            <td>{{TodaysDate | date:'m'}}</td>
+            <td>{{TodaysDate | date:'Y'}}</td>
+            <td>{{TodaysDate | date:'H'}}</td>
+            <td>{{TodaysDate | date:'i'}}</td>
+            <td>{{TodaysDate | date:'s'}}</td>
+        </tr>
+    </thead>
+</table>
+{% endblock body_block %}
+

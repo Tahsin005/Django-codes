@@ -1,0 +1,33 @@
+{% extends "djangobasicsapp/Layout.html" %}
+
+{% block body_block %}
+<div class="container-fluid">
+    <h2>User List</h2>
+
+    <div class="d-flex flex-wrap">
+        {% for user in users  %}
+            <div class="card m-2 p-2" style="width: 200px">
+                <img src={{image}} height="200 " class="card-img-top">
+
+                <div class="card-header">
+                    <h2>{{user.id}}</h2>
+                </div>
+
+                <div class="card-body">
+                    <dl>
+                        <dt>First Name</dt>
+                        <dd>{{user.name.firstname}}</dd>
+
+                        <dt>Last Name</dt>
+                        <dd>{{user.name.lastname}}</dd>
+
+                        <dt>Email</dt>
+                        <dd>{{user.email}}</dd>
+                    </dl>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock body_block %}
+

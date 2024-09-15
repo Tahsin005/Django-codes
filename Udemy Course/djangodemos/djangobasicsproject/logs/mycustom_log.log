@@ -1,0 +1,5 @@
+2024-08-29 15:50:45,929 - views.py - loggingExample - DEBUG - 10 - 61 - Debug: I just entered into the view.. 2024-08-29 15:50:45.929473
+2024-08-29 15:50:45,929 - views.py - loggingExample - INFO - 20 - 62 - Info: Confirmation that things are working as expected.
+2024-08-29 15:50:45,929 - views.py - loggingExample - WARNING - 30 - 63 - Warning: An indication that something unexpected happened.
+2024-08-29 15:50:45,929 - views.py - loggingExample - ERROR - 40 - 64 - Error: Due to more serious problem, the software have stopped working.
+2024-08-29 15:50:45,930 - views.py - loggingExample - CRITICAL - 50 - 65 - Critical: A serious error, indicating that the program itself may be unable to continue.

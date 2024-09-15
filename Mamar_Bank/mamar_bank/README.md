@@ -1,3 +1,5 @@
+# Mamar-Bank
+
 Bank Management Project
 This is a bank Management project named Mamar Bank. User can get a flavor of online banking system like deposit, withdraw money, taking loan, getting email after each transaction.
 
@@ -16,4 +18,4 @@ Can delete account, transaction history
 Can approve loan and email will be sent to that user
 
 Live Link
-https://mamar-bank-7isl.onrender.com/
+[Mamar_Bank](https://mamar-bank-a5ip.onrender.com/)

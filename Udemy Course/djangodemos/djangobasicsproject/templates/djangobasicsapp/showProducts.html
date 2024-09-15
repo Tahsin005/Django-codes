@@ -1,0 +1,115 @@
+{% extends "djangobasicsapp/Layout.html" %}
+
+{% block body_block %}
+    <div class="bg-info p-2 mt-1">
+        <h5>Total Proudcts: {{TotalProducts}}</h5>
+    </div>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <td>Product ID</td>
+                <td>Product Name</td>
+                <td>Quantity</td>
+                <td>Units In Stock</td>
+                <td>Discontinued</td>
+                <td>Cost</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in Products %}
+                <tr>
+                    <td>{{product.productID}}</td>
+                    <td>{{product.productName}}</td>
+                    <td>{{product.quantity}}</td>
+                    <td>{{product.unitsInStock}}</td>
+                    <td>{{product.disContinued}}</td>
+                    <td>{{product.cost}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        {% for product in Products %}
+            <li>
+                {{product.productName}}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <ol>
+        {% for product in Products %}
+            <li>
+                {{product.productName}}
+            </li>
+        {% endfor %}
+    </ol>
+
+    <ol class="list-unstyled">
+        {% for product in Products %}
+            <li>
+                <input type="checkbox" name="" id="{{product.productID}}"> {{product.productName}}
+            </li>
+        {% endfor %}
+    </ol>
+
+    <ol class="list-unstyled">
+        {% for product in Products %}
+            <li>
+                <input type="radio" name="productName" id="{{product.productID}}"> {{product.productName}}
+            </li>
+        {% endfor %}
+    </ol>
+    
+    <div>
+        <select class="form-select">
+            {% for product in Products %}
+                <option value="{{product.productID}}">
+                    {{product.productName}}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="mt-5">
+        <select class="form-select" size="2">
+            {% for product in Products %}
+                <option value="{{product.productID}}">
+                    {{product.productName}}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+     <div class="form-group m-2">
+        <label for="">ProductID</label>
+        <input type="text" class="form-control" value="{{Products.1.productID}}">
+        <label for="">Product Name</label>
+        <input type="text" class="form-control" value="{{Products.1.productName}}">
+        <label for="">Quantity</label>
+        <input type="text" class="form-control" value="{{Products.1.quantity}}">
+        <label for="">Units In Stock</label>
+        <input type="text" class="form-control" value="{{Products.1.unitsInStock}}">
+        <label for="">Discontinued</label>
+        <input type="text" class="form-control" value="{{Products.1.disContinued}}">
+        <label for="">Cost</label>
+        <input type="text" class="form-control" value="{{Products.1.cost}}">
+     </div>
+
+    <div>
+        <h2>Select Processor</h2>
+        <select name="" id="">
+            {% for processor in Processors %}
+                <optgroup label="{{processor.Category}}">
+                    {% for processorname in processor.processors %}
+                        <option value="">{{processorname}}</option>
+                    {% endfor %}
+                </optgroup>
+            {% endfor %}
+        </select>
+    </div>
+
+
+    
+{% endblock body_block %}
+

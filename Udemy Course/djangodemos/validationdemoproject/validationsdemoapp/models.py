@@ -1,5 +1,14 @@
 from django.db import models
 from django.core.validators import MinLengthValidator, MinValueValidator, MaxValueValidator
+
+from django.core.exceptions import ValidationError
+import re
+# Custom validators 
+def validate_favwebsiteurl(iurl):
+    pattern = re.compile(r"^http\://[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(/\S*)?$")
+    if not re.fullmatch(pattern, iurl):
+        raise ValidationError("Invalid URL format.")
+
 # Create your models here.
 class UserRegistration(models.Model):
     # username = models.CharField(max_length=15, verbose_name="User Name")
@@ -21,4 +30,4 @@ class UserRegistration(models.Model):
     profile = models.TextField(verbose_name="Profile of User", blank=True)
     website_url = models.URLField(verbose_name="Website URL")
     terms_conditions = models.BooleanField(verbose_name="Terms & Conditions")
-    favwebsite_url = models.CharField(max_length=256)
+    favwebsite_url = models.CharField(max_length=256, validators=[validate_favwebsiteurl])

@@ -27,8 +27,58 @@
 <body>
     <h1>Employee Insert Table</h1>
     <form method="POST">
-        <table class="table">
+        {% comment %} <table class="table">
             {{form.as_table}}
+        </table> {% endcomment %}
+        <table class="table">
+          <tr>
+            <td>First Name</td>
+            <td>{{form.FirstName}}</td>
+          </tr>
+          <tr>
+            <td>LastName</td>
+            <td>{{form.LastName}}</td>
+        </tr>
+        <tr>
+            <td>TitleName</td>
+            <td>{{form.TitleName}}</td>
+        </tr>
+        <tr>
+            <td>HasPassport</td>
+            <td>{{form.HasPassport}}</td>
+        </tr>
+        <tr>
+            <td>Salary</td>
+            <td>{{form.Salary}}</td>
+        </tr>
+        <tr>
+            <td>BirthDate</td>
+            <td>{{form.BirthDate}}</td>
+        </tr>
+        <tr>
+            <td>HireDate</td>
+            <td>{{form.HireDate}}</td>
+        </tr>
+        <tr>
+            <td>Notes</td>
+            <td>{{form.Notes}}</td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>{{form.Email}}</td>
+        </tr>
+        <tr>
+            <td>PhoneNumber</td>
+            <td>{{form.PhoneNumber}}</td>
+        </tr>
+        <tr>
+            <td>Department</td>
+            <td>{{form.EmpDepartment}}</td>
+        </tr>
+        <tr>
+            <td>Country</td>
+            <td>{{form.EmpCountry}}</td>
+        </tr>
         </table>
         {% csrf_token %}
         <button type="submit" class="btn btn-primary">Insert </button>

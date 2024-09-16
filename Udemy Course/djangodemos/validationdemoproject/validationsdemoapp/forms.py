@@ -34,4 +34,29 @@ class UserRegistrationForm(forms.ModelForm):
             if not re.fullmatch(pattern, iphonenumber):
                 raise forms.ValidationError("Invalid Phone Number! Example: 919234567891")
             return iphonenumber
+    
+    # Form level validation
+    def clean(self):
+        cleaned_data = super().clean()
         
+        ipassword = cleaned_data.get('password')
+        iconfirm_password = cleaned_data.get('confirm_password')
+        
+        if ipassword and iconfirm_password:
+            if ipassword != iconfirm_password:
+                raise forms.ValidationError("Passwords do not match!")
+        
+        iusername = cleaned_data.get('username')
+        if iusername:
+            if ipassword == iusername:
+                raise forms.ValidationError("Username should not be same as password!")
+        
+        icountry = cleaned_data.get('country')
+        if icountry == "select":
+            raise forms.ValidationError("Please choose a country!")
+        
+        iterms_conditions = cleaned_data.get('terms_conditions')
+        if not iterms_conditions:
+            raise forms.ValidationError("You must agree to terms and conditions!")
+        
+        return cleaned_data

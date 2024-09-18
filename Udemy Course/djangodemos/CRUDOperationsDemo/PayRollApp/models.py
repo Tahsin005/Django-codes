@@ -43,5 +43,5 @@ class PartTimeEmployee(models.Model):
     TitleName = models.CharField(max_length=100)
     
     def __str__(self) -> str:
-        return f'{self.FirstName} {self.LastName}'
+        return f'{self.FirstName} {self.LastName} - {self.TitleName}'
     

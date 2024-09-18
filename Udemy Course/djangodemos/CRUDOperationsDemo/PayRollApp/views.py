@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from . models import Employee, PartTimeEmployee
-from . forms import EmployeeForm, PartTimeEmployeeForm, DynamicPartTimeEmployeeForm
+from . forms import EmployeeForm, PartTimeEmployeeForm, DynamicPartTimeEmployeeForm, PartTimeEmployeeFormSet
 # Create your views here.
 def EmployeesList(request):
     Employees = Employee.objects.all()
@@ -88,3 +88,16 @@ def BulkInsertDemo(request):
                 form.save()
                 Status = "Part Time Employees inserted successfully."
     return render(request, 'PayRollApp/parttimeemployee_list.html', {'forms': forms, 'extra_forms': range(extra_forms), 'Status': Status})
+
+
+def NewBulkInsertDemo(request):
+    
+    if request.method == 'POST':
+        formset = PartTimeEmployeeFormSet(request.POST, prefix="employee")
+        if formset.is_valid():
+            employees = formset.save(commit=False)
+            PartTimeEmployee.objects.bulk_create(employees)
+            return redirect('NBID')
+    else:
+        formset = PartTimeEmployeeFormSet(queryset=PartTimeEmployee.objects.none(), prefix="employee")
+    return render(request, 'PayRollApp/NewBulkInsert.html', {'formset': formset})

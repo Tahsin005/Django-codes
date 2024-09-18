@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from . models import Employee
-from . forms import EmployeeForm
+from . models import Employee, PartTimeEmployee
+from . forms import EmployeeForm, PartTimeEmployeeForm, DynamicPartTimeEmployeeForm
 # Create your views here.
 def EmployeesList(request):
     Employees = Employee.objects.all()
@@ -72,3 +72,19 @@ def EmployeeInsert(request):
             return redirect('EmployeesList')
     
     return render(request, TemplateFileName, Dict)
+
+
+
+
+
+
+def BulkInsertDemo(request):
+    extra_forms = 10
+    forms = [PartTimeEmployeeForm(request.POST or None, prefix=f'employee-{i}') for i in range(extra_forms)]
+    Status = ""
+    if request.method == 'POST':
+        for form in forms:
+            if form.is_valid() and form.cleaned_data.get('FirstName', ''):
+                form.save()
+                Status = "Part Time Employees inserted successfully."
+    return render(request, 'PayRollApp/parttimeemployee_list.html', {'forms': forms, 'extra_forms': range(extra_forms), 'Status': Status})

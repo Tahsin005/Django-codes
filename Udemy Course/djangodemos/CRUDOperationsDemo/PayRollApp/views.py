@@ -130,3 +130,16 @@ def BulkDeleteDemo(request):
             return redirect('BDD')
     return render(request, 'PayRollApp/BulkDeleteDemo.html', {'employees': employees})
     
+def DeleteUsingRadio(request):
+    employees = PartTimeEmployee.objects.all()
+    
+    if request.method == 'POST':
+        selected_id = request.POST.get('selected_id')
+        if selected_id:
+            PartTimeEmployee.objects.filter(pk=selected_id).delete()
+            return redirect('DUR')
+        else:
+            return redirect('BDD')
+    return render(request, 'PayRollApp/DeleteUsingRadio.html', {'employees': employees})
+    
+    

@@ -10,5 +10,6 @@ urlpatterns = [
     path('newBulkEmployeeInsert/', views.NewBulkInsertDemo, name='NBID'),
     path('bulkEmployeeUpdate/', views.BulkUpdationDemo, name='BUD'),
     path('bulkDeleteDemo/', views.BulkDeleteDemo, name='BDD'),
+    path('deleteUsingRadio/', views.DeleteUsingRadio, name='DUR'),
     
 ]

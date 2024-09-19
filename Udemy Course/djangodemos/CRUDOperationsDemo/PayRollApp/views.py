@@ -122,5 +122,11 @@ def BulkUpdationDemo(request):
 
 def BulkDeleteDemo(request):
     employees = PartTimeEmployee.objects.all()
+     
+    if request.method == 'POST':
+        selected_ids = request.POST.getlist('selected_ids')
+        if selected_ids:
+            PartTimeEmployee.objects.filter(pk__in=selected_ids).delete()
+            return redirect('BDD')
     return render(request, 'PayRollApp/BulkDeleteDemo.html', {'employees': employees})
     

@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
 from . models import Employee, PartTimeEmployee
 from . forms import EmployeeForm, PartTimeEmployeeForm, DynamicPartTimeEmployeeForm, PartTimeEmployeeFormSet
+
+from django.core.paginator import Paginator, PageNotAnInteger
+from django.conf import settings
 # Create your views here.
 def EmployeesList(request):
     Employees = Employee.objects.all()
@@ -142,4 +145,19 @@ def DeleteUsingRadio(request):
             return redirect('BDD')
     return render(request, 'PayRollApp/DeleteUsingRadio.html', {'employees': employees})
     
+
+
+def PageWiseEmployeeList(request):
+    page_size = int(request.GET.get('page_size', getattr(settings, 'PAGE_SIZE', 5)))
+    page = request.GET.get('page', 1)
     
+    employees = PartTimeEmployee.objects.all()
+    
+    paginator = Paginator(employees, page_size)
+    
+    try:
+        employees_page = paginator.page(page)
+    except PageNotAnInteger:
+        employees_page = paginator.page(1)
+    
+    return render(request, 'PayRollApp/PageWiseEmployees.html', {'employees_page': employees_page, 'page_size': page_size})

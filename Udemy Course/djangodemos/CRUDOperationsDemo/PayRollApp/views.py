@@ -154,12 +154,24 @@ def PageWiseEmployeeList(request):
     
     search_query = request.GET.get('search', '')
     
+    sort_by = request.GET.get('sort_by', 'id')
+    sort_order = request.GET.get('sort_order', 'asc') 
+    
+    valid_sort_fields = ['id', 'FirstName', 'LastName', 'TitleName']
+    if sort_by not in valid_sort_fields:
+        sort_by = 'id' 
+    
     employees = PartTimeEmployee.objects.filter(
         Q(id__icontains=search_query) |
         Q(FirstName__icontains=search_query) |
         Q(LastName__icontains=search_query) |
         Q(TitleName__icontains=search_query) 
     )
+    
+    if sort_order == 'desc':
+        employees = employees.order_by(f'-{sort_by}')
+    else:
+        employees = employees.order_by(sort_by)
     
     # employees = PartTimeEmployee.objects.all()
     
@@ -170,4 +182,4 @@ def PageWiseEmployeeList(request):
     except PageNotAnInteger:
         employees_page = paginator.page(1)
     
-    return render(request, 'PayRollApp/PageWiseEmployees.html', {'employees_page': employees_page, 'page_size': page_size, 'search_query': search_query})
+    return render(request, 'PayRollApp/PageWiseEmployees.html', {'employees_page': employees_page, 'page_size': page_size, 'search_query': search_query, 'sort_order': sort_order, 'sort_by': sort_by})

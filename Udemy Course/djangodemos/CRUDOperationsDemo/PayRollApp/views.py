@@ -4,6 +4,7 @@ from . forms import EmployeeForm, PartTimeEmployeeForm, DynamicPartTimeEmployeeF
 
 from django.core.paginator import Paginator, PageNotAnInteger
 from django.conf import settings
+from django.db.models import Q
 # Create your views here.
 def EmployeesList(request):
     Employees = Employee.objects.all()
@@ -151,7 +152,16 @@ def PageWiseEmployeeList(request):
     page_size = int(request.GET.get('page_size', getattr(settings, 'PAGE_SIZE', 5)))
     page = request.GET.get('page', 1)
     
-    employees = PartTimeEmployee.objects.all()
+    search_query = request.GET.get('search', '')
+    
+    employees = PartTimeEmployee.objects.filter(
+        Q(id__icontains=search_query) |
+        Q(FirstName__icontains=search_query) |
+        Q(LastName__icontains=search_query) |
+        Q(TitleName__icontains=search_query) 
+    )
+    
+    # employees = PartTimeEmployee.objects.all()
     
     paginator = Paginator(employees, page_size)
     
@@ -160,4 +170,4 @@ def PageWiseEmployeeList(request):
     except PageNotAnInteger:
         employees_page = paginator.page(1)
     
-    return render(request, 'PayRollApp/PageWiseEmployees.html', {'employees_page': employees_page, 'page_size': page_size})
+    return render(request, 'PayRollApp/PageWiseEmployees.html', {'employees_page': employees_page, 'page_size': page_size, 'search_query': search_query})

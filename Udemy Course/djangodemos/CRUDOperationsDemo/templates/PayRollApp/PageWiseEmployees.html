@@ -29,6 +29,12 @@
         <center><h2>View all employees</h2></center>
         <br>
 
+        <form action="" method="get">
+            <label>Enter the keyword to search:</label>
+            <input type="text" name="search" id="search" value={{search_query}}>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+
         <form id="page-size-form" action="" method="get">
             <label for="page_size">
                 Items per page:

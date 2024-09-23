@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
-from . models import Employee, PartTimeEmployee
-from . forms import EmployeeForm, PartTimeEmployeeForm, DynamicPartTimeEmployeeForm, PartTimeEmployeeFormSet
+from . models import Employee, PartTimeEmployee, OnSiteEmployees, State, City, Country
+from . forms import EmployeeForm, PartTimeEmployeeForm, DynamicPartTimeEmployeeForm, PartTimeEmployeeFormSet, OnSiteEmployeesForm
+
+from django.http import JsonResponse
 
 from django.core.paginator import Paginator, PageNotAnInteger
 from django.conf import settings
@@ -183,3 +185,28 @@ def PageWiseEmployeeList(request):
         employees_page = paginator.page(1)
     
     return render(request, 'PayRollApp/PageWiseEmployees.html', {'employees_page': employees_page, 'page_size': page_size, 'search_query': search_query, 'sort_order': sort_order, 'sort_by': sort_by})
+
+
+
+
+def cascadingSelect(request):
+    employee_form = OnSiteEmployeesForm()
+    
+    if request.method == 'POST':
+        employee_form = OnSiteEmployeesForm(request.POST)
+        if employee_form.is_valid():
+            employee_form.save()
+            return JsonResponse({'success': True})
+    
+    return render(request, 'PayRollApp/CascadingDemo.html', {'employee_form': employee_form})
+
+
+def load_states(request):
+    country_id = request.GET.get('country_id')
+    states = State.objects.filter(country_id=country_id).values('id', 'name')
+    return JsonResponse(list(states), safe=False)
+
+def load_cities(request):
+    state_id = request.GET.get('state_id')
+    cities = City.objects.filter(state_id=state_id).values('id', 'name')
+    return JsonResponse(list(cities), safe=False)

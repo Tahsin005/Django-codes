@@ -6,6 +6,7 @@ from django.http import JsonResponse
 
 from django.core.paginator import Paginator, PageNotAnInteger
 from django.conf import settings
+from django.db import transaction
 from django.db.models import Q
 # Create your views here.
 def EmployeesList(request):
@@ -210,3 +211,16 @@ def load_cities(request):
     state_id = request.GET.get('state_id')
     cities = City.objects.filter(state_id=state_id).values('id', 'name')
     return JsonResponse(list(cities), safe=False)
+
+
+def TransactionDemo(request):
+    try:
+        with transaction.atomic():
+            employee = PartTimeEmployee.objects.create(FirstName='Naima', LastName='Jannathul', TitleName='Python developer')
+            employee = PartTimeEmployee.objects.create(FirstName='petricia', LastName='thorton', TitleName='Python developer')
+            employee = PartTimeEmployee.objects.create(FirstName='gini', LastName='thorton', TitleName='Django developer')
+            employee = PartTimeEmployee.objects.create(FirstName='sharar', LastName='iram', TitleName='Doctor')
+            employee = PartTimeEmployee.objects.create(FirstName='tamim', LastName='tamim', TitleName='Doctor footballer')
+    except Exception as e:
+        return render(request, 'PayRollApp/TransactionDemo.html', {'Message': str(e)})
+    return render(request, 'PayRollApp/TransactionDemo.html', {'Message': 'Success!!'})

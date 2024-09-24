@@ -15,6 +15,7 @@ urlpatterns = [
     path('cascadingselect/', views.cascadingSelect, name='cs'),
     path('load_states/', views.load_states, name='load_states'),
     path('load_cities/', views.load_cities, name='load_cities'),
+    path('transactionDemo/', views.TransactionDemo, name='TD'),
     
 ]
  

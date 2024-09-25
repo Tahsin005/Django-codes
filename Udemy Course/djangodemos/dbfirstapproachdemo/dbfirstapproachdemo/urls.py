@@ -20,4 +20,5 @@ from dbfirstapproachapp import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('ShowCategories/', views.ShowCategories),
+    path('ShowOrders/', views.RawSqlDemo),
 ]

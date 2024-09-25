@@ -26,6 +26,18 @@ def StoredProcedureDemo(request):
     orders = cursor.fetchall()
     return render(request, 'dbfa/ShowOrders.html', {'Orders': orders})
 
+def SPWithOutputParametersDemo(request):
+    cnxn = GetConnection()
+    cursor = cnxn.cursor()
+    count = 0
+    cursor.execute("{call USP_GetOrdersCount(?)}", count)
+    count = cursor.fetchval()
+    
+    cursor.execute("{call USP_GetAllOrders}")
+    orders = cursor.fetchall()
+    
+    return render(request, 'dbfa/ShowOrders.html', {'Orders': orders, 'Count': count})
+
 def GetConnection():
     conn = pyodbc.connect('DRIVER=ODBC Driver 17 for SQL Server;Server=.;Database=Northwind;Trusted_Connection=YES;')
     return (conn)

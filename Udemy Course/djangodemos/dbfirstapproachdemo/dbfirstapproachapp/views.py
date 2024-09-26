@@ -20,11 +20,55 @@ def RawSqlDemo(request):
     return render(request, 'dbfa/ShowOrders.html', {'Orders': orders})
 
 def StoredProcedureDemo(request):
+    
+    GrandTotal = 0
+    runningTotal = 0
+    runningOrderTotal = 0
+    
     cnxn = GetConnection()
     cursor = cnxn.cursor()
     cursor.execute("{call USP_GetAllOrders}")
     orders = cursor.fetchall()
-    return render(request, 'dbfa/ShowOrders.html', {'Orders': orders})
+    
+    newOrders = [] 
+    previousOrderID = 0
+    
+    for order in orders:
+        if previousOrderID == 0:
+            previousOrderID = order.OrderID
+            runningTotal += order.BillAmount
+            runningOrderTotal += order.BillAmount
+            GrandTotal += order.BillAmount
+            newOrders.append(pushData(order, runningTotal, runningOrderTotal))
+        elif previousOrderID == order.OrderID:
+            runningTotal += order.BillAmount
+            runningOrderTotal += order.BillAmount
+            GrandTotal += order.BillAmount
+            newOrders.append(pushData(order, runningTotal, runningOrderTotal))
+        else:
+            previousOrderID = order.OrderID
+            runningOrderTotal = 0
+            
+            runningTotal += order.BillAmount
+            runningOrderTotal += order.BillAmount
+            GrandTotal += order.BillAmount
+            newOrders.append(pushData(order, runningTotal, runningOrderTotal))
+            
+        
+    return render(request, 'dbfa/ShowOrders.html', {'Orders': newOrders, 'GrandTotal': GrandTotal})
+
+def pushData(order, runningTotal, runningOrderTotal):
+    return {
+        'OrderID': order.OrderID,
+        'OrderDate': order.OrderDate,
+        'CompanyName': order.CompanyName,
+        'ProductName': order.ProductName,
+        'UnitPrice': order.UnitPrice,
+        'Quantity': order.Quantity,
+        'BillAmount': order.BillAmount,
+        'RunningTotal': runningTotal,
+        'RunningOrderTotal': runningOrderTotal
+    }
 
 def SPWithOutputParametersDemo(request):
     cnxn = GetConnection()

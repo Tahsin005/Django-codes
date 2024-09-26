@@ -21,5 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('ShowCategories/', views.ShowCategories),
     path('ShowOrders/', views.RawSqlDemo),
-    path('StoredProcedureDemo/', views.SPWithOutputParametersDemo),
+    path('StoredProcedureDemo/', views.StoredProcedureDemo),
 ]

@@ -22,4 +22,5 @@ urlpatterns = [
     path('ShowCategories/', views.ShowCategories),
     path('ShowOrders/', views.RawSqlDemo),
     path('StoredProcedureDemo/', views.StoredProcedureDemo),
+    path('filteringDemo/', views.FilteringQuerySetsDemo, name='FDM'),
 ]

@@ -1,6 +1,8 @@
 from django.shortcuts import render
-from . models import Categories
+from . models import Categories, Orders
 import pyodbc
+
+from django.db.models import Q, Avg, Sum, Min, Max, Count
 # Create your views here.
 def ShowCategories(request):
     categories = Categories.objects.all()
@@ -110,3 +112,63 @@ def SPWithOutputParametersDemo(request):
 def GetConnection():
     conn = pyodbc.connect('DRIVER=ODBC Driver 17 for SQL Server;Server=.;Database=Northwind;Trusted_Connection=YES;')
     return (conn)
+
+
+def FilteringQuerySetsDemo(request):
+    # orders = Orders.objects.all()
+    
+    # orders = Orders.objects.filter(freight__gt=20)
+    # orders = Orders.objects.filter(freight__gte=20)
+    # orders = Orders.objects.filter(freight__lt=20)
+    # orders = Orders.objects.filter(freight__lte=20)
+    
+    # orders = Orders.objects.filter(shipcountry__exact='Germany')
+    # orders = Orders.objects.filter(shipcountry__contains='land')
+    # orders = Orders.objects.filter(orderid__exact=10248)
+    # orders = Orders.objects.filter(employeeid__in=[1, 3, 5])
+    # orders = Orders.objects.filter(employeeid__in=[1, 3, 5]).order_by('employeeid')
+    # orders = Orders.objects.filter(employeeid__in=[1, 3, 5]).order_by('-employeeid')
+    
+    # orders = Orders.objects.filter(shipname__startswith='A')
+    # orders = Orders.objects.filter(shipname__endswith='e')
+    
+    # orders = Orders.objects.filter(freight__range=[10, 20])
+    
+    # orders = Orders.objects.filter(shipname__startswith='A') | Orders.objects.filter(freight__lt=20)
+    # orders = Orders.objects.filter(shipname__startswith='A') & Orders.objects.filter(freight__lt=20)
+    # orders = Orders.objects.filter(Q(shipname__startswith='A') | Q(freight__lt=20))
+    # orders = Orders.objects.filter(Q(shipname__startswith='A') & Q(freight__lt=20))
+    # orders = Orders.objects.filter(shipname__startswith='A', freight__lt=20)
+    
+    
+    # orders = Orders.objects.exclude(shipname__startswith='A')
+    # orders = Orders.objects.filter(~Q(shipname__startswith='A'))
+    
+    
+    # orders = Orders.objects.all().order_by('orderid')
+    # orders = Orders.objects.all().order_by('-orderid')
+    # orders = Orders.objects.all().order_by('shipcountry')
+    
+    year = 1997
+    orders = Orders.objects.filter(orderdate__year=year).order_by('-orderdate', 'employeeid')
+    
+    avg = Orders.objects.all().aggregate(Avg('freight'))
+    max = Orders.objects.all().aggregate(Max('freight'))
+    min = Orders.objects.all().aggregate(Min('freight'))
+    sum = Orders.objects.all().aggregate(Sum('freight'))
+    count = Orders.objects.all().aggregate(Count('freight'))
+    
+    my_dict = {
+        'Orders': orders,
+        'avg': avg['freight__avg'],
+        'count': count['freight__count'],
+        'sum': sum['freight__sum'],
+        'min': min['freight__min'],
+        'max': max['freight__max']
+    }
+    
+    
+    # print(type(orders))
+    # print(str(orders.query))
+    
+    return render(request, 'dbfa/FilteringDemo.html', {'Orders': my_dict})

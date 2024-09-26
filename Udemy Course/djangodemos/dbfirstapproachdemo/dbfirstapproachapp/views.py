@@ -17,6 +17,9 @@ def RawSqlDemo(request):
     cursor = cnxn.cursor()
     cursor.execute(query)
     orders = cursor.fetchall()
+    
+    cursor.close()
+    cnxn.close()
     return render(request, 'dbfa/ShowOrders.html', {'Orders': orders})
 
 def StoredProcedureDemo(request):
@@ -32,6 +35,7 @@ def StoredProcedureDemo(request):
     
     newOrders = [] 
     previousOrderID = 0
+    subtotal = 0
     
     for order in orders:
         if previousOrderID == 0:
@@ -39,36 +43,57 @@ def StoredProcedureDemo(request):
             runningTotal += order.BillAmount
             runningOrderTotal += order.BillAmount
             GrandTotal += order.BillAmount
+            subtotal += order.BillAmount
             newOrders.append(pushData(order, runningTotal, runningOrderTotal))
         elif previousOrderID == order.OrderID:
             runningTotal += order.BillAmount
             runningOrderTotal += order.BillAmount
             GrandTotal += order.BillAmount
+            subtotal += order.BillAmount
             newOrders.append(pushData(order, runningTotal, runningOrderTotal))
         else:
+            newOrders.append(pushData(0, runningTotal, 0))
+            subtotal = 0
             previousOrderID = order.OrderID
             runningOrderTotal = 0
             
             runningTotal += order.BillAmount
             runningOrderTotal += order.BillAmount
             GrandTotal += order.BillAmount
+            subtotal += order.BillAmount
             newOrders.append(pushData(order, runningTotal, runningOrderTotal))
             
+    newOrders.append(pushData(0, runningTotal, 0))
+    cursor.close()
+    cnxn.close()
         
     return render(request, 'dbfa/ShowOrders.html', {'Orders': newOrders, 'GrandTotal': GrandTotal})
 
 def pushData(order, runningTotal, runningOrderTotal):
-    return {
-        'OrderID': order.OrderID,
-        'OrderDate': order.OrderDate,
-        'CompanyName': order.CompanyName,
-        'ProductName': order.ProductName,
-        'UnitPrice': order.UnitPrice,
-        'Quantity': order.Quantity,
-        'BillAmount': order.BillAmount,
-        'RunningTotal': runningTotal,
-        'RunningOrderTotal': runningOrderTotal
-    }
+    if order == 0:
+        return {
+            'OrderID': '',
+            'OrderDate': '',
+            'CompanyName': '',
+            'ProductName': '',
+            'UnitPrice': '',
+            'Quantity': '',
+            'BillAmount': '',
+            'RunningTotal': runningTotal,
+            'RunningOrderTotal': ''
+        }
+    else:
+        return {
+            'OrderID': order.OrderID,
+            'OrderDate': order.OrderDate,
+            'CompanyName': order.CompanyName,
+            'ProductName': order.ProductName,
+            'UnitPrice': order.UnitPrice,
+            'Quantity': order.Quantity,
+            'BillAmount': order.BillAmount,
+            'RunningTotal': runningTotal,
+            'RunningOrderTotal': runningOrderTotal
+        }
 
 def SPWithOutputParametersDemo(request):
     cnxn = GetConnection()

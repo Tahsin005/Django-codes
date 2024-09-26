@@ -49,7 +49,11 @@
                     <td>{{ order.ProductName }}</td>
                     <td>{{ order.UnitPrice }}</td>
                     <td>{{ order.Quantity }}</td>
-                    <td>{{ order.BillAmount }}</td>
+                    <td>{% if order.BillAmount != '' %}
+                        <b>{{ order.BillAmount }} </b>
+                        {% elif order.BillAmount == '' %}
+                            <b>Sub Total</b>
+                        {% endif %}</td>
                     <td>{{ order.RunningTotal }}</td>
                     <td>{{ order.RunningOrderTotal }}</td>
                 </tr>

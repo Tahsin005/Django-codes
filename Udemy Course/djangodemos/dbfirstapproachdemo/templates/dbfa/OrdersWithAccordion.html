@@ -42,6 +42,10 @@
 </head>
 <body>
     <div class="container mt-5">
+        <div class="mb-3">
+            <button class="btn btn-primary" type="button" onclick="toggleAll(1)">Expand All</button>
+            <button class="btn btn-primary" type="button" onclick="toggleAll(2)">Collapse All</button>
+        </div>
         {% for order in orders %}
            <div style="width: 87%">
                 <div class="accordion">
@@ -93,6 +97,19 @@
                 orderDetailsTable.style.display = "none";
             } else {
                 orderDetailsTable.style.display = "block";
+            }
+        }
+        
+        function toggleAll(mode) {
+            const orderTables = document.getElementsByClassName("accordion");
+            for (let i = 0; i < orderTables.length; i++) {
+                const orderTable = orderTables[i];
+                const orderDetailsTable = orderTable.querySelector("table[id^='OrderDetails-']");
+                if (mode === 1) {
+                    orderDetailsTable.style.display = "block";
+                } else {
+                    orderDetailsTable.style.display = "none";
+                }
             }
         }
     </script>

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from . models import Categories, Orders, OrderDetails
+from . models import Categories, Orders, OrderDetails, Employees
 import pyodbc
 
 from django.db.models import Q, Avg, Sum, Min, Max, Count
@@ -183,3 +183,18 @@ def TwoLevelAccordionDemo(request):
         'orders' : orders,
         'order_details': order_details_list
     })
+    
+def MultiLevelAccordionDemo(request):
+     employees_list = Employees.objects.order_by('employeeid')
+     order_ids = Orders.objects.filter(employeeid__in=employees_list).values_list('orderid', flat=True).distinct()
+     orders = Orders.objects.filter(orderid__in=order_ids,orderid__range=[10248,10270]).order_by('orderid')
+     #orders=Orders.objects.all()
+     order_ids = [order.orderid for order in orders]
+     print(order_ids)
+     order_details_list = OrderDetails.objects.filter(orderid__in=order_ids).order_by('orderid')
+
+     return render(request, 'dbfa/MultiLevelAccordion.html', {  
+        'employees': employees_list,    
+        'orders': orders,
+        'order_details': order_details_list,        
+    })  

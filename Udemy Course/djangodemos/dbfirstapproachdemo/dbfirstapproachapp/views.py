@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from . models import Categories, Orders
+from . models import Categories, Orders, OrderDetails
 import pyodbc
 
 from django.db.models import Q, Avg, Sum, Min, Max, Count
@@ -159,7 +159,7 @@ def FilteringQuerySetsDemo(request):
     count = Orders.objects.all().aggregate(Count('freight'))
     
     my_dict = {
-        'Orders': orders,
+        'Orders': orders, 
         'avg': avg['freight__avg'],
         'count': count['freight__count'],
         'sum': sum['freight__sum'],
@@ -172,3 +172,14 @@ def FilteringQuerySetsDemo(request):
     # print(str(orders.query))
     
     return render(request, 'dbfa/FilteringDemo.html', {'Orders': my_dict})
+
+
+def TwoLevelAccordionDemo(request):
+    orders = Orders.objects.filter(orderid__range=[10248, 102555]).order_by('orderid')
+    order_ids = [order.orderid for order in orders]
+    order_details_list = OrderDetails.objects.filter(orderid__in=order_ids).order_by('orderid') 
+    
+    return render(request, 'dbfa/OrdersWithAccordion.html', {
+        'orders' : orders,
+        'order_details': order_details_list
+    })

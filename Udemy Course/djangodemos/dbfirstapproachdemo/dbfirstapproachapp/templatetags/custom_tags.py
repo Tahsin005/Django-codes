@@ -13,3 +13,8 @@ def show_orders(start=10248, end=10255):
         'orders' : orders,
         'order_details': order_details_list
     })
+    
+
+@register.simple_tag(name='calculate_billamount')
+def calculate_billamount(quantity, unitprice):
+    return (quantity * unitprice)

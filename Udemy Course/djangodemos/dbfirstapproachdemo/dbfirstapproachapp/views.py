@@ -198,3 +198,9 @@ def MultiLevelAccordionDemo(request):
         'orders': orders,
         'order_details': order_details_list,        
     })  
+
+
+
+
+def ShowOrdersUsingCTT(request):
+    return render(request, 'dbfa/ShowOrdersUsingCTT.html')

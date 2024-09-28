@@ -25,4 +25,5 @@ urlpatterns = [
     path('filteringDemo/', views.FilteringQuerySetsDemo, name='FDM'),
     path('ordersWithAccordion/', views.TwoLevelAccordionDemo, name='OWA'),
     path('multiLevelAccordion/', views.MultiLevelAccordionDemo, name='OWA'),
+    path('ShowOrdersUsingCTT/', views.ShowOrdersUsingCTT, name='CTT'),
 ]

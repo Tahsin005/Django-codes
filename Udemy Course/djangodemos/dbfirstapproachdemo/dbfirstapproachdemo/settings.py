@@ -98,9 +98,13 @@ CACHES = {
     #     'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
     #     'LOCATION': 'ecom',
     # }
+    # 'default': {
+    #     'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+    #     'LOCATION': 'my_cache_table',
+    # }
     'default': {
-        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
-        'LOCATION': 'my_cache_table',
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': 'E:/MyCache/',
     }
 }
 

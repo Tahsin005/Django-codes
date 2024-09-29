@@ -185,18 +185,17 @@ def TwoLevelAccordionDemo(request):
     })
     
 def MultiLevelAccordionDemo(request):
-     employees_list = Employees.objects.order_by('employeeid')
-     order_ids = Orders.objects.filter(employeeid__in=employees_list).values_list('orderid', flat=True).distinct()
-     orders = Orders.objects.filter(orderid__in=order_ids,orderid__range=[10248,10270]).order_by('orderid')
-     #orders=Orders.objects.all()
-     order_ids = [order.orderid for order in orders]
-     print(order_ids)
-     order_details_list = OrderDetails.objects.filter(orderid__in=order_ids).order_by('orderid')
-
-     return render(request, 'dbfa/MultiLevelAccordion.html', {  
-        'employees': employees_list,    
-        'orders': orders,
-        'order_details': order_details_list,        
+    employees_list = Employees.objects.order_by('employeeid')
+    order_ids = Orders.objects.filter(employeeid__in=employees_list).values_list('orderid', flat=True).distinct()
+    orders = Orders.objects.filter(orderid__in=order_ids,orderid__range=[10248,10270]).order_by('orderid')
+    #orders=Orders.objects.all()
+    order_ids = [order.orderid for order in orders]
+    print(order_ids)
+    order_details_list = OrderDetails.objects.filter(orderid__in=order_ids).order_by('orderid')
+    return render(request, 'dbfa/MultiLevelAccordion.html', {  
+       'employees': employees_list,    
+       'orders': orders,
+       'order_details': order_details_list,        
     })  
 
 
@@ -209,19 +208,32 @@ def ShowOrdersUsingCTT(request):
 
 
 from django.views.decorators.cache import cache_page
+from django.core.cache import cache
 
-@cache_page(60 * 15)  # Cache for 15 minutes
+
+# @cache_page(60 * 15)  # Cache for 15 minutes
 def CachingDemo(request):
-     employees_list = Employees.objects.order_by('employeeid')
-     order_ids = Orders.objects.filter(employeeid__in=employees_list).values_list('orderid', flat=True).distinct()
-     orders = Orders.objects.filter(orderid__in=order_ids,orderid__range=[10248,10270]).order_by('orderid')
-     #orders=Orders.objects.all()
-     order_ids = [order.orderid for order in orders]
-     print(order_ids)
-     order_details_list = OrderDetails.objects.filter(orderid__in=order_ids).order_by('orderid')
-
-     return render(request, 'dbfa/MultiLevelAccordion.html', {  
-        'employees': employees_list,    
-        'orders': orders,
-        'order_details': order_details_list,        
+    if cache.get('cache_Employees') == None:
+        employees_list = Employees.objects.order_by('employeeid')
+        
+        cache.set('cache_Employees', employees_list, 3600)
+        
+        order_ids = Orders.objects.filter(employeeid__in=employees_list).values_list('orderid', flat=True).distinct()
+        orders = Orders.objects.filter(orderid__in=order_ids,orderid__range=[10248,10270]).order_by('orderid')
+        
+        cache.set('cache_Orders', orders, 3600)
+        #orders=Orders.objects.all()
+        order_ids = [order.orderid for order in orders]
+        print(order_ids)
+        order_details_list = OrderDetails.objects.filter(orderid__in=order_ids).order_by('orderid')
+        cache.set('cache_OrderDetails', order_details_list, 3600)
+    else:
+        employees_list = cache.get('cache_Employees')
+        orders = cache.get('cache_Orders')
+        order_details_list = cache.get('cache_OrderDetails')
+        
+    return render(request, 'dbfa/MultiLevelAccordion.html', {  
+       'employees': employees_list,    
+       'orders': orders,
+       'order_details': order_details_list,        
     })  

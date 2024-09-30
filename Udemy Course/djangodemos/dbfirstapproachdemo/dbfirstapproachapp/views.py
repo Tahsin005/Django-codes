@@ -3,8 +3,8 @@ from . models import Categories, Orders, OrderDetails, Employees
 import pyodbc
 
 from django.db.models import Q, Avg, Sum, Min, Max, Count
-import csv, json
-
+import csv, json, openpyxl
+from io import BytesIO
 from django.http import HttpResponse
 # Create your views here.
 def ShowCategories(request):
@@ -258,7 +258,7 @@ def ExportToCSV(request):
     
     return response
 
-def ExportFromJSON(request):
+def ExportToJSON(request):
     categories = Categories.objects.all()
     file_name = f'Category_data.json'
     
@@ -271,5 +271,25 @@ def ExportFromJSON(request):
     
     
     return response
+
+def ExportToXLS(request):
+    categories = Categories.objects.all()
+    file_name = f'Category_data.xlsx'
     
+    workbook = openpyxl.Workbook()
+    worksheet = workbook.active
     
+    headers = ['CategoryID', 'CategoryName', 'Description']
+    worksheet.append(headers)
+    
+    for category in categories:
+        worksheet.append([category.categoryid, category.categoryname, category.description])
+    
+    buffer = BytesIO()
+    workbook.save(buffer)
+    buffer.seek(0)
+    
+    response = HttpResponse(buffer.read(), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = f'attachment; filename={file_name}'
+    
+    return response

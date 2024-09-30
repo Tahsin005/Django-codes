@@ -28,5 +28,6 @@ urlpatterns = [
     path('CachingDemo/', views.CachingDemo, name='OWA'),
     path('ShowOrdersUsingCTT/', views.ShowOrdersUsingCTT, name='CTT'),
     path('export_to_csv/', views.ExportToCSV, name='export_to_csv'),
-    path('export_to_json/', views.ExportFromJSON, name='export_to_json'),
+    path('export_to_json/', views.ExportToJSON, name='export_to_json'),
+    path('export_to_xls/', views.ExportToXLS, name='export_to_xls'),
 ]

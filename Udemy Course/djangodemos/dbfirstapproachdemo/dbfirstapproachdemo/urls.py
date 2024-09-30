@@ -27,4 +27,5 @@ urlpatterns = [
     path('multiLevelAccordion/', views.MultiLevelAccordionDemo, name='OWA'),
     path('CachingDemo/', views.CachingDemo, name='OWA'),
     path('ShowOrdersUsingCTT/', views.ShowOrdersUsingCTT, name='CTT'),
+    path('export_to_csv/', views.ExportToCSV, name='export_to_csv'),
 ]

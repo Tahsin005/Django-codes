@@ -3,6 +3,9 @@ from . models import Categories, Orders, OrderDetails, Employees
 import pyodbc
 
 from django.db.models import Q, Avg, Sum, Min, Max, Count
+import csv
+
+from django.http import HttpResponse
 # Create your views here.
 def ShowCategories(request):
     categories = Categories.objects.all()
@@ -237,3 +240,20 @@ def CachingDemo(request):
        'orders': orders,
        'order_details': order_details_list,        
     })  
+    
+    
+    
+def ExportToCSV(request):
+    categories = Categories.objects.all()
+    file_name = f'Category_data.csv'
+    
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = f'attachment; filename={file_name}'
+    
+    writer = csv.writer(response)
+    
+    writer.writerow(['Category ID', 'Category Name', 'Description'])
+    for category in categories:
+        writer.writerow([category.categoryid, category.categoryname, category.description])
+    
+    return response

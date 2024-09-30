@@ -3,7 +3,7 @@ from . models import Categories, Orders, OrderDetails, Employees
 import pyodbc
 
 from django.db.models import Q, Avg, Sum, Min, Max, Count
-import csv
+import csv, json
 
 from django.http import HttpResponse
 # Create your views here.
@@ -257,3 +257,19 @@ def ExportToCSV(request):
         writer.writerow([category.categoryid, category.categoryname, category.description])
     
     return response
+
+def ExportFromJSON(request):
+    categories = Categories.objects.all()
+    file_name = f'Category_data.json'
+    
+    response = HttpResponse(content_type='application/json')
+    response['Content-Disposition'] = f'attachment; filename={file_name}' 
+    
+    data = [{'categoryid': category.categoryid, 'categoryname': category.categoryname, 'description': category.description} for category in categories]
+    
+    json.dump(data, response)
+    
+    
+    return response
+    
+    

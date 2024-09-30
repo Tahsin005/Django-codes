@@ -30,4 +30,6 @@ urlpatterns = [
     path('export_to_csv/', views.ExportToCSV, name='export_to_csv'),
     path('export_to_json/', views.ExportToJSON, name='export_to_json'),
     path('export_to_xls/', views.ExportToXLS, name='export_to_xls'),
+    path('export_to_docx/', views.ExportToWord, name='export_to_docx'),
+    # path('export_to_pdf/', views.ExportToPDF, name='export_to_pdf'),
 ]

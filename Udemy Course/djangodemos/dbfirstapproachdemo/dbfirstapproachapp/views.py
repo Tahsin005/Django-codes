@@ -6,6 +6,9 @@ from django.db.models import Q, Avg, Sum, Min, Max, Count
 import csv, json, openpyxl
 from io import BytesIO
 from django.http import HttpResponse
+from docx import Document
+# from weasyprint import HTML
+from django.template.loader import render_to_string
 # Create your views here.
 def ShowCategories(request):
     categories = Categories.objects.all()
@@ -293,3 +296,45 @@ def ExportToXLS(request):
     response['Content-Disposition'] = f'attachment; filename={file_name}'
     
     return response
+
+
+def ExportToWord(request):
+    categories=Categories.objects.all()  
+    file_name=f"Category_data.docx"
+     # Generate a Word document
+    document = Document()
+    # Add a table with headers
+    table = document.add_table(rows=1, cols=3)
+    table.style = 'TableGrid'
+    header_row = table.rows[0].cells
+    header_row[0].text = 'Category ID'
+    header_row[1].text = 'Category Name'
+    header_row[2].text = 'Description'
+    
+    for cell in header_row:
+         cell.paragraphs[0].runs[0].font.bold = True
+    # Add data to the table
+    for category in categories:
+         row = table.add_row().cells
+         row[0].text = str(category.categoryid)
+         row[1].text = category.categoryname
+         row[2].text = category.description
+    
+      # Save the Word document to a BytesIO buffer
+    buffer = BytesIO()
+    document.save(buffer)
+    buffer.seek(0)
+    # Return the Word file as the HTTP response
+    response = HttpResponse(buffer.read(), content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+    response['Content-Disposition'] = f'attachment; filename="{file_name}"'
+    return response
+
+# def ExportToPDF(request):     
+#     categories=Categories.objects.all()  
+#     file_name=f"Category_data.pdf"
+#     response = HttpResponse(content_type='application/pdf')
+#     response['Content-Disposition'] = f'attachment; filename="{file_name}"'
+#     html_string = render_to_string('dbfa/ShowCategoriesPDF.html', {'Categories': categories})
+#     html = HTML(string=html_string)
+#     html.write_pdf(response)
+#     return response

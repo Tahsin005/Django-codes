@@ -1,0 +1,9 @@
+{% extends "uploadfilesapp/base.html" %}
+{% block content %}
+    <form enctype="multipart/form-data" method="post">
+        {% csrf_token %}
+        {{employee_form.as_p}}
+        <button type="submit">Upload File</button>
+    </form>
+{% endblock content %}
+

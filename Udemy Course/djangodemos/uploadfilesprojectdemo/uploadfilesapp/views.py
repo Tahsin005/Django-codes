@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect
-from . forms import EmployeeForm, EmployeeCertificate
+from . forms import EmployeeForm
+from . models import EmployeeCertificate, Employee
 from django.contrib import messages
 import os
+import base64
+from django.shortcuts import get_object_or_404, redirect, render
 # Create your views here.
 
 def employee_create(request):
@@ -38,3 +41,34 @@ def employee_create(request):
                 )           
     
     return render(request, 'uploadfilesapp/employee_create.html', {'employee_form': employee_form})
+
+
+def employee_list(request):
+    employees = Employee.objects.all()
+    
+    employee_data = []
+    for employee in employees:
+        existing_certificates = len(EmployeeCertificate.objects.filter(employee=employee))
+        remaing_certificates = 10 - existing_certificates
+        employee_data.append({
+            'employee': employee,
+            'remaining_certificates': remaing_certificates
+        })
+    return render(request, 'uploadfilesapp/employee_list.html', {'employee_data': employee_data})
+
+
+
+def employee_details(request, employee_id):
+    employee = get_object_or_404(Employee, pk=employee_id)
+    certificates = EmployeeCertificate.objects.filter(employee=employee)
+
+    # Convert the binary image data to base64
+    pan_card_pic_base64 = base64.b64encode(employee.pan_card_pic_blob).decode('utf-8') if employee.pan_card_pic_blob else None
+
+    #return render(request, 'uploadfilesapp/employee_details.html', 
+                  #{'employee': employee, 'certificates': certificates})
+    
+    return render(request, 'uploadfilesapp/employee_details.html', 
+                  {'employee': employee, 
+                   'pan_card_pic_base64': pan_card_pic_base64, 
+                   'certificates': certificates})

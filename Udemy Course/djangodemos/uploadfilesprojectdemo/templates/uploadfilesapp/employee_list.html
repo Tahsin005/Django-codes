@@ -1,0 +1,34 @@
+{% extends "uploadfilesapp/base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <center>
+        <h2>Employee List</h2>
+    </center>
+    <div><a href="{% url 'employee_create' %}" class="btn btn-primary">Create</a></div>
+    <br /><br />
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Actions/Operations</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for data in employee_data %}
+            <tr>
+                <td>{{ data.employee.id }}</td>
+                <td>{{ data.employee.first_name }}</td>
+                <td>{{ data.employee.last_name }}</td>
+                <td>
+                    <a href="{% url 'employee_details' data.employee.id %}">
+                        Details</a>            
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}
+

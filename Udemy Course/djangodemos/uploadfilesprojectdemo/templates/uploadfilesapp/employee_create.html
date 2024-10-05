@@ -8,7 +8,9 @@
         <div class="mt-3" id="certificate-input-wrapper"></div>
         <button type="submit" class="btn btn-success mt-3">Submit</button>
     </form>
-
+    <div class="mt-3 bg-secondary-subtle">
+        <a href="{% url "employee_list" %}">List of employees</a>
+    </div>
     <script>
         let certificateCounter = 0;
         function addCerticicateInput() {

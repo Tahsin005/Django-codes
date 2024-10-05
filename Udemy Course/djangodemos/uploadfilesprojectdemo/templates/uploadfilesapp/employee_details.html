@@ -1,0 +1,50 @@
+{% extends 'uploadfilesapp/base.html' %}
+{% block content %}
+
+<h1>{{ employee.first_name }} {{ employee.last_name }}</h1>
+
+{% if employee.cv_file %}
+    <p><strong>CV:</strong> 
+        <a href="{{ employee.cv_file.url }}" download="{{ employee.cv_file.name }}">
+            {{ employee.cv_file.name }}
+        </a>
+    </p>
+{% else %}
+    <p><strong>CV:</strong> No CV available</p>
+{% endif %}
+
+{% if employee.photo_file %}
+    <p><strong>Photo:</strong> 
+        <a href="{{ employee.photo_file.url }}" download="{{ employee.photo_file.name }}">
+            {{ employee.photo_file.name }}
+        </a>
+    </p>
+{% else %}
+    <p><strong>Photo:</strong> No photo available</p>
+{% endif %}
+
+{% if pan_card_pic_base64 %}
+    <!-- Display PAN Card Picture information -->
+    <p><strong>PAN Card:</strong></p>
+    <img src="data:image/jpeg;base64,{{ pan_card_pic_base64 }}" alt="PAN Card">
+{% else %}
+    <p><strong>PAN Card:</strong> No PAN Card picture available</p>
+{% endif %}
+
+
+<h3>Certificates</h3>
+<ul>
+  {% for certificate in certificates %}
+    <li>
+      <a href="{{ certificate.certificate_file.url }}" 
+      download="{{ certificate.certificate_file.name }}">
+      {{ certificate.certificate_file.name }}
+    </a>     
+    </li>
+  {% endfor %}
+</ul>
+
+<a href="{% url 'employee_list' %}" class="btn btn-secondary">Back</a>
+
+
+{% endblock %}

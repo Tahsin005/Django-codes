@@ -18,4 +18,4 @@ class EmployeeCertificate(models.Model):
     certificate_file = models.FileField(upload_to=certificate_upload_path, null=True, blank=True) 
     
     def __str__(self):
-        return self.employee
+        return f'{self.employee}'

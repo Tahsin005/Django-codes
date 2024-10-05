@@ -62,13 +62,7 @@ def employee_details(request, employee_id):
     employee = get_object_or_404(Employee, pk=employee_id)
     certificates = EmployeeCertificate.objects.filter(employee=employee)
 
-    # Convert the binary image data to base64
-    pan_card_pic_base64 = base64.b64encode(employee.pan_card_pic_blob).decode('utf-8') if employee.pan_card_pic_blob else None
-
-    #return render(request, 'uploadfilesapp/employee_details.html', 
-                  #{'employee': employee, 'certificates': certificates})
     
+
     return render(request, 'uploadfilesapp/employee_details.html', 
-                  {'employee': employee, 
-                   'pan_card_pic_base64': pan_card_pic_base64, 
-                   'certificates': certificates})
+                  {'employee': employee, 'certificates': certificates})

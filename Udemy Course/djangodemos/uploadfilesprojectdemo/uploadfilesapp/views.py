@@ -15,7 +15,18 @@ def employee_create(request):
         certificate_files = request.FILES.getlist('certificate_files')
         
         if employee_form.is_valid():
-            employee = employee_form.save()
+            # employee = employee_form.save()
+            
+            employee = employee_form.save(commit=False)
+            
+            pan_card_pic_blob = request.FILES.get('pan_card_pic_blob')
+            if pan_card_pic_blob:
+                employee.pan_card_pic_blob = pan_card_pic_blob.read()
+                
+            employee.save() 
+            
+            
+            
             if len(certificate_files) > 10:
                 messages.error(request, 'You can upload a maximum of 10 certificate files')
                 return redirect('employee_create')

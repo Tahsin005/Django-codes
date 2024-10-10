@@ -7,6 +7,9 @@ class Employee(models.Model):
     cv_file = models.FileField(upload_to='employee_files/cv/', null=True, blank=True)
     photo_file = models.FileField(upload_to='employee_files/photo/', null=True, blank=True)
     
+    # New field for PAN card picture as blob 
+    pan_card_pic_blob = models.BinaryField(blank=True, null=True)
+    
     def __str__(self):
         return f'{self.id} {self.first_name}'
 

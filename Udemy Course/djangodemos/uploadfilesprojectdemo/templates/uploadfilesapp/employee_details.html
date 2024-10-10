@@ -21,9 +21,14 @@
     </p>
 {% else %}
     <p><strong>Photo:</strong> No photo available</p>
+    {% endif %}
+    
+    {% if pan_card_pic_base64 %}
+    <p><strong>PAN Card: </strong></p>
+    <img src="data:image/jpeg;base64,{{pan_card_pic_base64}}" alt="PAN Card">
+{% else %}
+    <p><strong>PAN Card:</strong> No PAN Card picture available</p>
 {% endif %}
-
-
 
 
 <h3>Certificates</h3>
